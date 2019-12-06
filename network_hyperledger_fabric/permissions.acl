@@ -1,0 +1,125 @@
+/**
+ * New access control file
+ */
+
+rule SystemACL {
+    description:  "System ACL to permit all access"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule ReadCommodity {
+    description: "All participants can read its own goods"
+    participant: "agu.fit.lhanh.*"
+    operation: READ
+    resource: "agu.fit.lhanh.Commodity"
+    action: ALLOW
+}
+
+rule VenderReadPO {
+    description: "All participants can read its own PO"
+    participant: "agu.fit.lhanh.*"
+    operation: READ
+    resource: "agu.fit.lhanh.PO"
+    action: ALLOW
+}
+
+rule ordererReadPO {
+    description: "All participants can read its own PO"
+    participant: "agu.fit.lhanh.*"
+    operation: READ
+    resource: "agu.fit.lhanh.PO"
+    action: ALLOW
+}
+
+rule RuleWithTransaction {
+    description: "Allow all paticipants to access TransferCommodity transaction"
+    participant: "agu.fit.lhanh.*"
+    operation: CREATE
+    resource: "agu.fit.lhanh.TransferCommodity"
+    action: ALLOW
+}
+
+rule ConditionRuleWithTransaction {
+  	description:"Allow all paticipants to transfer its own commodity only by TransferCommodity"
+    participant: "agu.fit.lhanh.*"
+    operation: UPDATE
+    resource: "agu.fit.lhanh.*"
+    transaction: "agu.fit.lhanh.TransferCommodity"
+    action: ALLOW
+}
+
+rule ConditionalRuleWithTransaction2 {
+  	description:"Grant all paticipants to read its own transaction records"
+    participant: "agu.fit.lhanh.*"
+    operation: READ
+    resource: "agu.fit.lhanh.TransferCommodity"
+    action: ALLOW
+}
+
+rule ConditionalRuleWithTransaction3 {
+  	description:"Grant all participants to read its own transaction records"
+    participant: "agu.fit.lhanh.*"
+    operation: READ
+    resource: "agu.fit.lhanh.TransferCommodity"
+    action: ALLOW
+}
+
+rule ConditionalRuleWithCreation {
+    description: "Grant all participants can create its own resource"
+    participant: "agu.fit.lhanh.*"
+    operation: CREATE
+    resource: "agu.fit.lhanh.Commodity"
+    action: ALLOW
+}
+
+rule ConditionalRulewithCreationOfPO {
+    description:"Allow all paticipants to initiate PO"
+    participant: "agu.fit.lhanh.*"
+    operation: CREATE
+    resource: "agu.fit.lhanh.PO"
+    transaction: "agu.fit.lhanh.InitiatePO"
+    action: ALLOW
+}
+
+rule RuleWithInitiatePOTransaction {
+    description: "Allow all paticipants to access Initiate PO transaction"
+    participant: "agu.fit.lhanh.*"
+    operation: CREATE
+    resource: "agu.fit.lhanh.InitiatePO"
+    action: ALLOW
+}
+
+rule VenderCanReadTransaction {
+  	description:"Grant all paticipants to read its own transaction records"
+    participant: "agu.fit.lhanh.*"
+    operation: READ
+    resource: "agu.fit.lhanh.InitiatePO"
+    action: ALLOW
+}
+
+rule OrdererCanReadTransaction {
+  	description:"Grant all participants to read its own transaction records"
+    participant: "agu.fit.lhanh.*"
+    operation: READ
+    resource: "agu.fit.lhanh.InitiatePO"
+    action: ALLOW
+}
